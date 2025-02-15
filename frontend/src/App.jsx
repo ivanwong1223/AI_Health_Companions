@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import { Routes, Route } from 'react-router-dom'
+import { TextField, Container, Typography } from "@mui/material";
+
+import { Button } from "./components/ui/button";
+import { buttonVariants } from "./components/ui/button"
+import { Input } from "./components/ui/input";
+
+
+import MyProfile from "./pages/MyProfile";
+
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -31,9 +40,10 @@ function App() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type your message..."
       />
-      <Button variant="contained" onClick={handleSend} style={{ marginTop: "10px" }}>
+      <Button onClick={handleSend} style={{ marginTop: "10px" }}>
         Send
       </Button>
+      
     </Container>
   );
 }
