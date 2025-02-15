@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <div className='flex items-center py-2 px-[4%] justify-between'>
-      <img className='w-[max(10%,80px)]' src={assets.logo} alt="Logo" />
+      <img className='w-[max(15%,80px)]' src={assets.logo1} alt="Logo" />
       
       <div className="relative" ref={dropdownRef}>
         <button 
