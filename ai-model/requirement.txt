@@ -1,0 +1,7 @@
+pip install transformers
+pip install tensorflow
+pip install torch torchvision
+pip install rapidfuzz
+pip install spacy
+pip install 
+#pip install tf-keras
