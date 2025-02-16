@@ -1,41 +1,50 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Button, Container, Typography } from "@mui/material";
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Symptoms from './pages/Symptoms';
+import Signin from './pages/Signin';
+import MyProfile from './pages/MyProfile';
+import Navbar from './components/reusable/Navbar';
+import Sidebar from './components/reusable/Sidebar';
+import Footer from './components/reusable/Footer';
+import Appointments from './pages/Appointments';
+import Chatbox from './components/reusable/Chatbox';
+import Chat from './pages/Chat';
 
-function App() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+// import List from './pages/List'
+// import Orders from './pages/Orders'
 
-  const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { text: input, sender: "user" }]);
-      setInput("");
-      // TODO: Send message to backend/AI
-    }
-  };
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const App = () => {
+  const location = useLocation();
+  const isChatRoute = location.pathname === '/chat';
 
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        AI Health Companion
-      </Typography>
-      <div>
-        {messages.map((msg, index) => (
-          <div key={index} style={{ textAlign: msg.sender === "user" ? "right" : "left" }}>
-            <Typography variant="body1">{msg.text}</Typography>
-          </div>
-        ))}
+    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+      <ToastContainer />
+      <Navbar />
+      <hr />
+      <div className='flex w-full'>
+        <Sidebar />
+        <div className='w-[70%] mx-auto ml-[max(5vw, 25px)] my-8 text-gray-600 text-base'>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/symptoms" element={<Symptoms />} />
+            {/* <Route path="/list" element={<List/>} />
+            <Route path="/orders" element={<Orders/>} /> */}
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/myprofile" element={<MyProfile />} />
+            <Route path="/appointments" element={<Appointments />} />
+            <Route path="/chat" element={<Chat />} />
+          </Routes>
+        </div>
       </div>
-      <TextField
-        fullWidth
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Type your message..."
-      />
-      <Button variant="contained" onClick={handleSend} style={{ marginTop: "10px" }}>
-        Send
-      </Button>
-    </Container>
+      {!isChatRoute && <Footer />}
+      {!isChatRoute && <Chatbox />}
+    </div>
   );
-}
+};
 
 export default App;
