@@ -36,15 +36,17 @@ An intelligent healthcare companion application that provides personalized healt
 
 1. Clone the repository
 
-cd frontend
-npm install
-npm run dev
+- cd frontend
+- npm install
+- npm run dev
 
 ### Installation for AI Model (Transformer Bert)
-pip install transformers
-pip install tensorflow
-pip install torch torchvision
-pip install rapidfuzz
-pip install spacy
-pip install 
-#pip install tf-keras
+- pip install transformers
+- pip install tensorflow
+- pip install torch torchvision
+- pip install rapidfuzz
+- pip install spacy
+- pip install
+- pip install flask
+- pip install flask-cors
+- pip install thefuzz
