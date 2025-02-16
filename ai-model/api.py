@@ -13,22 +13,20 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 classification_pipeline = pipeline("text-classification", model=model, tokenizer=tokenizer)
 
-# Sample symptom-disease mapping
 disease_data = {
     "fever, cough, sore throat": "Flu",
-    "fever, headache, muscle pain, skin rash": "Dengue",
-    "cough, shortness of breath, chest pain, fatigue": "Pneumonia",
-    "fatigue, weight loss, frequent urination, increased thirst": "Diabetes",
-    "high fever, chills, sweating, body aches": "Malaria",
-    "runny nose, sneezing, mild fever, sore throat": "Common Cold",
-    "nausea, vomiting, stomach pain, diarrhea": "Food Poisoning",
-    "severe headache, sensitivity to light, stiff neck, fever": "Meningitis",
-    "persistent cough, blood in sputum, night sweats, weight loss": "Tuberculosis",
+    "fever, muscle pain, skin rash": "Dengue",
+    "cough, shortness of breath, chest pain": "Pneumonia",
+    "weight loss, frequent urination, increased thirst": "Diabetes",
+    "chills, sweating, body aches": "Malaria",
+    "runny nose, sneezing, sore throat": "Common Cold",
+    "nausea, vomiting, diarrhea": "Food Poisoning",
+    "severe headache, sensitivity to light, stiff neck": "Meningitis",
+    "persistent cough, blood in sputum, night sweats": "Tuberculosis",
     "frequent heartburn, chest discomfort, acid reflux": "GERD",
-    "itchy eyes, sneezing, nasal congestion, skin rashes": "Allergies",
-    "fever, dry cough, sore throat, fatigue, headache": "COVID-19"
+    "itchy eyes, sneezing, skin rashes": "Allergies",
+    "sore throat, fatigue, headache": "COVID-19"
 }
-
 def match_symptoms(user_input):
     best_match, best_score = None, 0
     for symptoms, disease in disease_data.items():

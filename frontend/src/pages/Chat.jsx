@@ -17,20 +17,54 @@ const Chat = () => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
 
+    // Add user message to the chat
     const newMessage = {
       id: Date.now().toString(),
       text: inputMessage,
       sender: 'user',
       timestamp: new Date(),
     };
-
     setMessages((prev) => [...prev, newMessage]);
     setInputMessage('');
     setIsLoading(true);
 
-    // Here you can integrate your backend API call
-    // For now, we'll just simulate a loading state
-    setIsLoading(false);
+    try {
+      // Send user message to the backend
+      const response = await fetch('http://localhost:4000/analyze-symptoms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ symptoms: inputMessage }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch AI response');
+      }
+
+      const data = await response.json();
+
+      // Add AI response to the chat
+      const aiMessage = {
+        id: Date.now().toString(),
+        text: `Based on your symptoms, you might have ${data.prediction}. Confidence: ${(data.confidence * 100).toFixed(2)}%`,
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Error:', error);
+      // Add error message to the chat
+      const errorMessage = {
+        id: Date.now().toString(),
+        text: 'Sorry, something went wrong. Please try again later.',
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -74,13 +108,13 @@ const Chat = () => {
               <div className="bg-gray-100 rounded-lg px-4 py-2">
                 <div className="flex space-x-2">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                  <div 
-                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" 
-                    style={{ animationDelay: '0.2s' }} 
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.2s' }}
                   />
-                  <div 
-                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" 
-                    style={{ animationDelay: '0.4s' }} 
+                  <div
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.4s' }}
                   />
                 </div>
               </div>
